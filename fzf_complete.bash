@@ -1,13 +1,36 @@
 
+_fzf_complete_home="$(dirname "${BASH_SOURCE[0]}")"
+
 fzf_complete() {
 
-    local fzf_complete_home
-    
-    fzf_complete_home="$(dirname "${BASH_SOURCE[0]}")"
+    # before and after cursor
+    local before="${READLINE_LINE:0:READLINE_POINT}"
+    local after="${READLINE_LINE:READLINE_POINT:${#READLINE_LINE}}"
 
-    "$fzf_complete_home/bin/export-completions" "$READLINE_LINE" | fzf
+    local options
 
-    # TODO: insert selection
+    if ! options=$("$_fzf_complete_home/bin/export-completions" "$before"); then
+        return
+    fi
+
+    local root=$(sed -n '2 p' <<< "$options")
+    local start=$(sed -n '3 p' <<< "$options" | cut -d: -f1)
+    local options=$(sed -n '4,$ p' <<< "$options")
+
+    local selection
+
+    if ! selection=$(fzf --query="$root" --prompt="Suggestions> " <<< "$options"); then
+        return
+    fi
+
+    if [ -n "$selection" ]; then
+        # cut before root
+        before="${before:0:start}"
+
+        # insert selection
+        READLINE_LINE="$before$selection$after"
+        READLINE_POINT=$(( ${#before} + ${#selection} ))
+    fi
 
 }
 
