@@ -4,32 +4,27 @@ import pexpect, time, sys
 
 partial = sys.argv[1]
 
-PROMPT = "PEXPECT_PROMPT> "
-# set the partial buffer you want to complete
-
 # spawn interactive bash
 child = pexpect.spawn("bash -i", encoding='utf-8', timeout=5)
 
-# set deterministic prompt
+# set prompt
+PROMPT = "PEXPECT_PROMPT> "
 child.sendline(f"PS1='{PROMPT}'")
 child.expect_exact(PROMPT)
 
-# bind Ctrl-X Ctrl-E to export-completions
+# bind export-completions readline function
 child.sendline('bind \'"\\C-x\\C-e": export-completions\'')
 child.expect_exact(PROMPT)
 
-# send the partial string into the line editor (no newline)
+# send partial string into line editor
 child.send(partial)
 
+# send the control sequence: C-x (0x18), C-e (0x05)
 CONTROL_SEQUENCE = '\x18\x05'
-
-# send the control sequence: Ctrl-X (0x18) then Ctrl-E (0x05)
 child.send(CONTROL_SEQUENCE)
 
-# give a short moment for readline to print completions
+# give readline time to print completions
 time.sleep(0.05)
-
-# wait for the prompt to reappear so the shell is stable again
 child.expect_exact(PROMPT)
 
 # cut first line (partial) and last line (empty) + remove \r
