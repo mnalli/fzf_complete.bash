@@ -21,7 +21,7 @@ child.expect_exact(PROMPT)
 # send the partial string into the line editor (no newline)
 child.send(partial)
 
-CONTROL_SEQUENCE='\x18\x05'
+CONTROL_SEQUENCE = '\x18\x05'
 
 # send the control sequence: Ctrl-X (0x18) then Ctrl-E (0x05)
 child.send(CONTROL_SEQUENCE)
@@ -32,8 +32,8 @@ time.sleep(0.05)
 # wait for the prompt to reappear so the shell is stable again
 child.expect_exact(PROMPT)
 
-# cut first line (partial) and last line (empty)
-print(child.buffer[len(partial + CONTROL_SEQUENCE + '\n'):-1])
+# cut first line (partial) and last line (empty) + remove \r
+print(child.buffer[len(partial + CONTROL_SEQUENCE + '\n'):-1].replace('\r', ''))
 
 child.sendline("exit")
 child.close()
