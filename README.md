@@ -2,6 +2,12 @@
 
 Fuzzy filter `bash` completions with [`fzf`](https://github.com/junegunn/fzf).
 
+## Requirements
+- Bash 5.3: `fzf_complete` leverages `export-completions` readline function,
+  introduced only in version 5.3
+- `python3`
+- `pexpect`
+    - With `apt`, `apt install python3-pexpect`
 
 ## Installation
 
