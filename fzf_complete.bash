@@ -19,9 +19,7 @@ fzf_complete() {
 
     local selection
 
-    if ! selection=$(fzf --query="$root" --prompt="Suggestions> " <<< "$options"); then
-        return
-    fi
+    selection=$(fzf --query="$root" --prompt="Suggestions> " <<< "$options") || return 1
 
     if [ -n "$selection" ]; then
         # cut before root
