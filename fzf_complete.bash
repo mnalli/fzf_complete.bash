@@ -31,5 +31,3 @@ fzf_complete() {
     fi
 
 }
-
-bind -x '"\e\t": "fzf_complete"'

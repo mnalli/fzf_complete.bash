@@ -17,7 +17,8 @@ COPY --chown=dev:dev . /home/dev/.fzf_complete.bash/
 
 USER dev
 
-RUN echo '. ~/.fzf_complete.bash/fzf_complete.bash' >> "$HOME/.bashrc"
+RUN echo '. ~/.fzf_complete.bash/fzf_complete.bash' >> "$HOME/.bashrc" && \
+    echo bind -x \'\"\\e\\t\": fzf_complete\' >> "$HOME/.bashrc"
 
 WORKDIR /home/dev/.fzf_complete.bash
 

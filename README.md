@@ -20,3 +20,17 @@ echo 'source ~/.fzf_complete.bash/fzf_complete.bash' >> ~/.bashrc
 git clone https://github.com/mnalli/fzf_complete.bash.git --depth=1 ~/.fzf_complete.bash
 echo 'source ~/.fzf_complete.bash/fzf_complete.bash' >> ~/.bashrc
 ```
+
+## Configuration
+
+`fzf_complete` must be bound to a key to be used interactively. Put the following
+snippet in your `.bashrc`:
+
+```bash
+# bind to Alt-TAB
+bind -x '"\e\t": "fzf_complete"'
+```
+
+*Note*: `Alt-TAB` may be intercepted by your windows manager or terminal. In that
+case, you could use bind another key.
+
