@@ -2,6 +2,8 @@
 
 Fuzzy filter `bash` completions with [`fzf`](https://github.com/junegunn/fzf).
 
+![Usage example](assets/usage.gif)
+
 ## Requirements
 - Bash 5.3: `fzf_complete` leverages `export-completions` readline function,
   introduced only in version 5.3
