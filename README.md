@@ -40,3 +40,9 @@ bind -x '"\e\t": "fzf_complete"'
 *Note*: `Alt-TAB` may be intercepted by your windows manager or terminal. In that
 case, you could use bind another key.
 
+## How does it work?
+
+`bin/export-completions` acts as a pseudo-terminal (**PTY**) that allocates an
+interactive `bash` shell, sets its command line buffer, and triggers the
+`export-completions` readline function. Its output will be processed by
+`fzf_complete` and piped into `fzf`.
